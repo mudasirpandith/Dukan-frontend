@@ -38,9 +38,6 @@ export const CartProductCard = props => {
           <Button
             onClick={() => {
               dispatch(deleteProductFromCart({ id: props.productId }));
-              if (props.success) {
-                window.location.reload();
-              }
             }}
           >
             Remove

@@ -14,6 +14,7 @@ import {
   AlertIcon,
   Box,
   Button,
+  Center,
   Divider,
   Flex,
   HStack,
@@ -21,9 +22,9 @@ import {
   Select,
   SimpleGrid,
   Spacer,
+  Spinner,
   Tag,
   Text,
-  useBreakpointValue,
   VStack,
 } from '@chakra-ui/react';
 import {
@@ -40,7 +41,7 @@ export const ProductPage = () => {
   const [productsInCart, setProductsInCart] = useState(1);
 
   const [productSize, setProductSize] = useState('M');
-  const { singleProduct, message, loading } = useSelector(
+  const { singleProduct, message, loading, contentLoader } = useSelector(
     state => state.products
   );
   const dispatch = useDispatch();
@@ -52,13 +53,13 @@ export const ProductPage = () => {
     dispatch(getSingleProduct({ id }));
   }, []);
 
-  return (
+  return !contentLoader ? (
     <>
       <Box
         maxW={'full'}
         border={'solid 2px #EEEEEE'}
         borderTop={'3px solid black'}
-        mx={useBreakpointValue({ md: '20px', base: '8px' })}
+        //mx={useBreakpointValue({ md: '20px', base: '8px' })}
       >
         <Text textAlign={'center'} fontSize={'2em'}>
           {singleProduct && singleProduct.name}
@@ -538,13 +539,25 @@ export const ProductPage = () => {
             <Text
               fontWeight={500}
               color={'white'}
-              fontSize={useBreakpointValue({ md: '15px', base: '10px' })}
+              //fontSize={useBreakpointValue({ md: '15px', base: '10px' })}
             >
               FREE DELIVERY ON ALL ORDERS ABOVE $50 | FREE 20 DAYS RETURN
             </Text>
           </Button>
         </Box>
       </Box>
+    </>
+  ) : (
+    <>
+      <Center>
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="black"
+          size="xl"
+        />
+      </Center>
     </>
   );
 };

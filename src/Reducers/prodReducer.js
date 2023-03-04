@@ -6,14 +6,17 @@ const initialState = {
     error: "",
     message: "",
     success: false,
-    productInCartSuccess: false,
+    contentLoader: true,
+    productInCartSuccess: true,
     productsInCart: []
 
 };
+// https://dukandar-api.onrender.com/product
+
 
 const fetch2 = async (api, method, body) => {
     console.log(body)
-    const res = await fetch(api, {
+    const res = await fetch("https://dukandar-api.onrender.com/product" + api, {
         method: method,
         headers: {
             'Accept': 'application/json',
@@ -26,23 +29,23 @@ const fetch2 = async (api, method, body) => {
     return await res.json();
 };
 export const getAllProducts = createAsyncThunk("getAllProducts", async (body) => {
-    const result = await fetch2("https://dukandar-api.onrender.com/product/get-all-products", "get", body);
+    const result = await fetch2("/get-all-products", "get", body);
     return result;
 });
 export const getSingleProduct = createAsyncThunk("getsingleproduct", async (body) => {
-    const result = await fetch2("https://dukandar-api.onrender.com/product/get-single-product", "post", body)
+    const result = await fetch2("/get-single-product", "post", body)
     return result
 });
 export const addProductToCart = createAsyncThunk("addproducttocart", async (body) => {
-    const result = await fetch2("https://dukandar-api.onrender.com/product/add-to-cart", "post", body)
+    const result = await fetch2("/add-to-cart", "post", body)
     return result
 });
 export const getProductsInCart = createAsyncThunk("addproducttocart", async (body) => {
-    const result = await fetch2("https://dukandar-api.onrender.com/product/get-products-in-cart", "get", body)
+    const result = await fetch2("/get-products-in-cart", "get", body)
     return result
 });
 export const deleteProductFromCart = createAsyncThunk("deleteproductfromcart", async (body) => {
-    const result = await fetch2("https://dukandar-api.onrender.com/product/delete-product-from-cart", "post", body)
+    const result = await fetch2("/delete-product-from-cart", "post", body)
     return result
 });
 
@@ -54,6 +57,7 @@ const productReducer = createSlice({
             state.loading = false;
             state.Allproducts = action.payload.products
             state.success = true;
+            state.contentLoader = false
             state.message = action.payload.message
         },
         [getAllProducts.pending]: (state, action) => {
@@ -61,11 +65,12 @@ const productReducer = createSlice({
         },
         [getSingleProduct.fulfilled]: (state, { payload: { singleProduct } }) => {
             state.loading = false;
-            // state.success = true;
+            state.contentLoader = false
             state.singleProduct = singleProduct
         },
         [getSingleProduct.pending]: (state, action) => {
             state.loading = true;
+
         },
         [addProductToCart.fulfilled]: (state, { payload: { message } }) => {
             state.productInCartSuccess = true;
@@ -80,6 +85,7 @@ const productReducer = createSlice({
             state.loading = false;
             state.success = true;
             state.message = message
+            state.contentLoader = false
             state.productsInCart = productsInCart
 
         },
