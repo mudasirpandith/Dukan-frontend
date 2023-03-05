@@ -8,14 +8,17 @@ const initialState = {
     success: false,
     contentLoader: true,
     productInCartSuccess: true,
-    productsInCart: []
+    productsInCart: [],
+    orders: [],
+    reviews: [],
+    reviewStatus: ""
 
 };
 // https://dukandar-api.onrender.com/product
 
 
 const fetch2 = async (api, method, body) => {
-    console.log(body)
+
     const res = await fetch("https://dukandar-api.onrender.com/product" + api, {
         method: method,
         headers: {
@@ -23,7 +26,6 @@ const fetch2 = async (api, method, body) => {
             "Content-Type": "application/json",
             authorization: localStorage.getItem("token"),
         },
-
         body: JSON.stringify(body),
     });
     return await res.json();
@@ -48,6 +50,20 @@ export const deleteProductFromCart = createAsyncThunk("deleteproductfromcart", a
     const result = await fetch2("/delete-product-from-cart", "post", body)
     return result
 });
+export const addOrder = createAsyncThunk("addorder", async (body) => {
+    const result = await fetch2("/add-order", "post", body)
+    return result
+});
+
+export const getOrders = createAsyncThunk("getordes", async (body) => {
+    const result = await fetch2("/get-orders", "get", body)
+    return result
+});
+
+export const addReview = createAsyncThunk("addreview", async (body) => {
+    const result = await fetch2("/add-review", "post", body)
+    return result
+});
 
 const productReducer = createSlice({
     name: "getproducts",
@@ -63,10 +79,11 @@ const productReducer = createSlice({
         [getAllProducts.pending]: (state, action) => {
             state.loading = true;
         },
-        [getSingleProduct.fulfilled]: (state, { payload: { singleProduct } }) => {
+        [getSingleProduct.fulfilled]: (state, { payload: { singleProduct, reviews } }) => {
             state.loading = false;
             state.contentLoader = false
             state.singleProduct = singleProduct
+            state.reviews = reviews
         },
         [getSingleProduct.pending]: (state, action) => {
             state.loading = true;
@@ -92,16 +109,45 @@ const productReducer = createSlice({
         [getProductsInCart.pending]: (state, action) => {
             state.loading = true;
         },
-        [deleteProductFromCart.fulfilled]: (state, { payload: { message } }) => {
+        [deleteProductFromCart.fulfilled]: (state, { payload: { message, productsInCart } }) => {
             state.loading = false;
             state.success = true;
             state.message = message
-
-
+            state.productsInCart = productsInCart
         },
         [deleteProductFromCart.pending]: (state, action) => {
             state.loading = true;
         },
+        [addOrder.fulfilled]: (state, { payload: { productsInCart, message } }) => {
+            state.loading = false;
+            state.success = true;
+            state.message = message
+            state.productsInCart = productsInCart
+        },
+        [addOrder.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [getOrders.fulfilled]: (state, { payload: { orders } }) => {
+            state.loading = false;
+            state.success = true;
+            state.orders = orders
+            state.contentLoader = false
+        },
+        [getOrders.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [addReview.fulfilled]: (state, { payload: { message, reviews } }) => {
+            state.loading = false;
+            state.success = true;
+            state.reviewStatus = message
+            state.reviews = reviews
+
+
+        },
+        [addReview.pending]: (state, action) => {
+            state.loading = true;
+        },
+
 
 
 

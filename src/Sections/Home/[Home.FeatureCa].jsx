@@ -28,7 +28,7 @@ export const HomeFeatureCat = () => {
             color={'blackAlpha.600'}
             fontWeight={'medium'}
           >
-            Accessories
+            Tousers
           </Text>
           <Divider />
           <Text
@@ -46,7 +46,7 @@ export const HomeFeatureCat = () => {
             color={'blackAlpha.600'}
             fontWeight={'medium'}
           >
-            Accessories
+            Shirts
           </Text>
           <Divider />
           <Text
@@ -64,7 +64,7 @@ export const HomeFeatureCat = () => {
             color={'blackAlpha.600'}
             fontWeight={'medium'}
           >
-            Accessories
+            Jeans
           </Text>
           <Divider />
           <Text
@@ -82,7 +82,7 @@ export const HomeFeatureCat = () => {
             color={'blackAlpha.600'}
             fontWeight={'medium'}
           >
-            Accessories
+            Shoes
           </Text>
           <Divider />
           <Text
@@ -103,7 +103,7 @@ export const HomeFeatureCat = () => {
             color={'blackAlpha.600'}
             fontWeight={'medium'}
           >
-            Accessories
+            T-Shirts
           </Text>
           <Divider />
           <Text

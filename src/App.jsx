@@ -17,6 +17,7 @@ import { ProductPage } from './Screens/ProductPage';
 import { Footer } from './Components/Navigation/Footer';
 import { Profile } from './Screens/Profile';
 import { CartPage } from './Screens/cartPage';
+import { OrderPage } from './Screens/OrderPage';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
               <Route path="account" element={<Profile />} />
               <Route path="cart" element={<CartPage />} />
               <Route path="product" element={<ProductPage />} />
+              <Route path="orders" element={<OrderPage />} />
 
               <Route path="*" element={<Page404 />} />
             </Route>

@@ -1,11 +1,19 @@
-import { Box, Button, Heading, SimpleGrid, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Center,
+  Heading,
+  SimpleGrid,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../Reducers/authReducer';
 
 export const Profile = () => {
   const dispatch = useDispatch();
-  const { credential } = useSelector(state => state.user);
+  const { credential, contentLoader } = useSelector(state => state.user);
 
   useEffect(() => {
     dispatch(getUser());
@@ -19,7 +27,7 @@ export const Profile = () => {
       maxW={'9xl'}
       border={'1px solid #eeeeee'}
     >
-      {credential.username && (
+      {!contentLoader ? (
         <SimpleGrid columns={{ md: 2, base: 1 }} spacing={'20px'}>
           <Box>
             <Heading py={'10px'} fontSize={'20px'}>
@@ -80,6 +88,16 @@ export const Profile = () => {
             </a>
           </Box>
         </SimpleGrid>
+      ) : (
+        <Center>
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="black"
+            size="xl"
+          />
+        </Center>
       )}
     </Box>
   );

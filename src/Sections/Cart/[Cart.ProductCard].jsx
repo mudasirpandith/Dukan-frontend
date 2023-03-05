@@ -1,3 +1,4 @@
+import { DeleteIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
@@ -15,7 +16,8 @@ export const CartProductCard = props => {
   const [isSmallerThan800] = useMediaQuery('(max-width: 800px)');
   return (
     <Flex flex={1} gap={'20px'}>
-      <Image w={'100px'} h={'100px'} flex={2} src={props.productImage} />
+      <Image w={'100px'} h={'100px'} src={props.productImage} />
+
       <Box w={'full'} flex={6} flexDirection={'column'}>
         <Flex flexDirection={isSmallerThan800 ? 'column' : 'row'}>
           <Text fontSize={'20px'}>{props.productName}</Text>
@@ -23,19 +25,24 @@ export const CartProductCard = props => {
           <Text fontSize={'20px'}>${props.productPrice}</Text>
         </Flex>
         <Box>
-          <Text fontSize={'14px'} color={'blackAlpha.700'} fontWeight={400}>
+          <Text fontSize={'14px'} color={'blackAlpha.700'} fontWeight={500}>
             Size Selected: {props.productSize}
           </Text>
-          <Text fontSize={'14px'} color={'blackAlpha.700'} fontWeight={400}>
+          <Text fontSize={'14px'} color={'blackAlpha.700'} fontWeight={500}>
             Quantity:{props.productsInCart} pieces
           </Text>
-          <Text fontSize={'14px'} color={'blackAlpha.700'} fontWeight={400}>
+          <Text fontSize={'14px'} color={'blackAlpha.700'} fontWeight={500}>
             Unit Price: ${props.productPrice}
           </Text>
-          <Text fontSize={'14px'} color={'blackAlpha.700'} fontWeight={400}>
+          <Text fontSize={'14px'} color={'blackAlpha.700'} fontWeight={500}>
             Total Price: ${props.productsInCart * props.productPrice}
           </Text>
           <Button
+            rightIcon={<DeleteIcon />}
+            bg={'white'}
+            size={'sm'}
+            color={'black'}
+            border={'1px solid gray'}
             onClick={() => {
               dispatch(deleteProductFromCart({ id: props.productId }));
             }}

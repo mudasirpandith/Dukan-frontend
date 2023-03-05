@@ -4,6 +4,8 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Center,
@@ -18,19 +20,33 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useMediaQuery } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
-import { FaShoppingBag, FaUserLock } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductsInCart } from '../Reducers/prodReducer';
+import { addOrder, getProductsInCart } from '../Reducers/prodReducer';
 import { CartProductCard } from '../Sections/Cart/[Cart.ProductCard]';
 
 export const CartPage = () => {
   const [isSmallerThan800] = useMediaQuery('(max-width: 800px)');
-  var amount = 0;
+  const [addressForm, setForm] = useState({
+    address: '',
+    village: '',
+    landmark: '',
+    phoneNumber: '',
+    email: '',
+    district: '',
+    state: '',
+    pin: '',
+  });
+  function handleChange(e) {
+    const { name, value } = e.target;
+    return setForm(prev => {
+      return { ...prev, [name]: value };
+    });
+  }
   const dispatch = useDispatch();
-  const { productsInCart, success, contentLoader } = useSelector(
-    state => state.products
-  );
+  var amount = 0;
+  const { productsInCart, loading, success, contentLoader, message } =
+    useSelector(state => state.products);
   useEffect(() => {
     !localStorage.getItem('token') && window.location.replace('/signin');
     dispatch(getProductsInCart());
@@ -60,24 +76,36 @@ export const CartPage = () => {
                 flexDirection={'column'}
                 gap={'10px'}
               >
+                {message && (
+                  <Alert status="success">
+                    <AlertIcon />
+                    <HStack w={'full'}>
+                      <Text>{message}</Text>
+                    </HStack>
+                  </Alert>
+                )}
+                {contentLoader && window.location.reload()}
                 {productsInCart &&
-                  productsInCart.map((prod, index) => {
-                    amount += prod.productsInCart * prod.productPrice;
-                    return (
-                      <React.Fragment key={index}>
-                        <CartProductCard
-                          productName={prod.productName}
-                          productPrice={prod.productPrice}
-                          productsInCart={prod.productsInCart}
-                          productImage={prod.productImage}
-                          productSize={prod.productSize}
-                          productId={prod._id}
-                          success={success}
-                        />
-                        <Divider />
-                      </React.Fragment>
-                    );
-                  })}
+                  productsInCart
+                    .slice()
+                    .reverse()
+                    .map((prod, index) => {
+                      amount += prod.productsInCart * prod.productPrice;
+                      return (
+                        <React.Fragment key={index}>
+                          <CartProductCard
+                            productName={prod.productName}
+                            productPrice={prod.productPrice}
+                            productsInCart={prod.productsInCart}
+                            productImage={prod.productImage}
+                            productSize={prod.productSize}
+                            productId={prod._id}
+                            success={success}
+                          />
+                          <Divider />
+                        </React.Fragment>
+                      );
+                    })}
               </Flex>
               <Flex flex={4} flexDirection={'column'}>
                 <Box mx={'auto'} p={'10px'} border={'1px solid gray'}>
@@ -121,63 +149,123 @@ export const CartPage = () => {
                       <AccordionPanel pb={4}>
                         <Input
                           rounded={'none'}
-                          border={'1px solid black'}
+                          border={'none'}
+                          borderBottom={'1px solid gray'}
                           my={'2px'}
                           w={'300px'}
                           display={'flex'}
                           mx={'auto'}
                           placeholder="Adress"
                           type="text"
+                          name="address"
+                          onChange={handleChange}
+                          isRequired
+                          value={addressForm.address}
                         />
                         <Input
                           rounded={'none'}
-                          border={'1px solid black'}
+                          border={'none'}
+                          borderBottom={'1px solid gray'}
+                          my={'2px'}
+                          w={'300px'}
+                          display={'flex'}
+                          mx={'auto'}
+                          placeholder="Phone Number"
+                          type="text"
+                          name="phoneNumber"
+                          onChange={handleChange}
+                          isRequired
+                          value={addressForm.phoneNumber}
+                        />
+                        <Input
+                          rounded={'none'}
+                          border={'none'}
+                          borderBottom={'1px solid gray'}
+                          my={'2px'}
+                          w={'300px'}
+                          display={'flex'}
+                          mx={'auto'}
+                          placeholder="Email"
+                          type="text"
+                          name="email"
+                          onChange={handleChange}
+                          isRequired
+                          value={addressForm.email}
+                        />
+                        <Input
+                          rounded={'none'}
+                          border={'none'}
+                          borderBottom={'1px solid gray'}
                           my={'2px'}
                           w={'300px'}
                           display={'flex'}
                           mx={'auto'}
                           placeholder="Village/Town"
                           type="text"
+                          name="village"
+                          onChange={handleChange}
+                          isRequired
+                          value={addressForm.village}
                         />
                         <Input
                           rounded={'none'}
-                          border={'1px solid black'}
+                          border={'none'}
+                          borderBottom={'1px solid gray'}
                           my={'2px'}
                           w={'300px'}
                           display={'flex'}
                           mx={'auto'}
                           placeholder="Street/Landmark"
                           type="text"
+                          name="landmark"
+                          onChange={handleChange}
+                          isRequired
+                          value={addressForm.landmark}
                         />
                         <Input
                           rounded={'none'}
-                          border={'1px solid black'}
+                          border={'none'}
+                          borderBottom={'1px solid gray'}
                           my={'2px'}
                           w={'300px'}
                           display={'flex'}
                           mx={'auto'}
                           placeholder="District"
                           type="text"
+                          name="district"
+                          onChange={handleChange}
+                          isRequired
+                          value={addressForm.district}
                         />
                         <Input
                           rounded={'none'}
-                          border={'1px solid black'}
+                          border={'none'}
+                          borderBottom={'1px solid gray'}
                           my={'2px'}
                           w={'300px'}
                           display={'flex'}
                           mx={'auto'}
                           placeholder="State"
                           type="text"
+                          name="state"
+                          onChange={handleChange}
+                          isRequired
+                          value={addressForm.state}
                         />
                         <Input
                           rounded={'none'}
-                          border={'1px solid black'}
+                          border={'none'}
+                          borderBottom={'1px solid gray'}
                           my={'2px'}
                           w={'300px'}
                           display={'flex'}
                           mx={'auto'}
                           placeholder="PIN"
                           type="text"
+                          name="pin"
+                          onChange={handleChange}
+                          isRequired
+                          value={addressForm.pin}
                         />
                       </AccordionPanel>
                     </AccordionItem>
@@ -208,7 +296,11 @@ export const CartPage = () => {
                     bg={'blackAlpha.800'}
                     rounded={'none'}
                     color={'white'}
+                    isLoading={loading}
                     w={'full'}
+                    onClick={() => {
+                      dispatch(addOrder({ address: addressForm }));
+                    }}
                   >
                     Checkout
                   </Button>

@@ -6,7 +6,7 @@ export const Page404 = () => {
     <Center>
       <VStack pt={40} pb={40}>
         <Heading fontSize={'9xl'}>404</Heading>
-        <Heading>Page Not Found</Heading>
+        <Heading>Page Not Found!</Heading>
       </VStack>
     </Center>
   );

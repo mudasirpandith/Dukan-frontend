@@ -34,7 +34,6 @@ export default function NavBar() {
     <Box maxW={'full'}  >
       <Center display={useBreakpointValue({ base: 'flex', md: "none" })} >
 
-
         <Image src={Logo} w={'full'} h={'80px'} />
       </Center>
       <Flex

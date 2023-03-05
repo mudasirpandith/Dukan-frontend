@@ -1,4 +1,5 @@
 import {
+  ArrowRightIcon,
   CheckCircleIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -19,6 +20,7 @@ import {
   Flex,
   HStack,
   Image,
+  Input,
   Select,
   SimpleGrid,
   Spacer,
@@ -36,14 +38,24 @@ import {
 } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import { addProductToCart, getSingleProduct } from '../Reducers/prodReducer';
+import {
+  addProductToCart,
+  addReview,
+  getSingleProduct,
+} from '../Reducers/prodReducer';
 export const ProductPage = () => {
   const [productsInCart, setProductsInCart] = useState(1);
 
   const [productSize, setProductSize] = useState('M');
-  const { singleProduct, message, loading, contentLoader } = useSelector(
-    state => state.products
-  );
+  const [review, setReview] = useState('');
+  const {
+    singleProduct,
+    message,
+    loading,
+    reviews,
+    contentLoader,
+    reviewStatus,
+  } = useSelector(state => state.products);
   const dispatch = useDispatch();
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -52,7 +64,12 @@ export const ProductPage = () => {
     document.title = 'Dukandar-' + title;
     dispatch(getSingleProduct({ id }));
   }, []);
-
+  function submitReview() {
+    if (review.length != 0) {
+      dispatch(addReview({ review, productId: singleProduct._id }));
+      setReview('');
+    }
+  }
   return !contentLoader ? (
     <>
       <Box
@@ -155,7 +172,9 @@ export const ProductPage = () => {
               <StarIcon fontSize={'14px'} />
               <StarIcon fontSize={'14px'} />
               <StarIcon fontSize={'14px'} />
-              <Text color={'gray.400'}>0 reviews</Text>
+              <Text color={'gray.400'}>
+                {reviews && reviews.length} reviews
+              </Text>
             </HStack>
             <Text color={'gray.500'}>
               <span style={{ color: 'red' }}>*</span> Size
@@ -368,16 +387,72 @@ export const ProductPage = () => {
                 <h2>
                   <AccordionButton>
                     <Box as="span" fontWeight={600} flex="1" textAlign="left">
-                      Reviews (0)
+                      Reviews ({reviews && reviews.length}){' '}
+                      {reviewStatus != '' && (
+                        <Alert status="success">
+                          <AlertIcon />
+                          <HStack w={'full'}>
+                            <Text>{reviewStatus}</Text>
+                          </HStack>
+                        </Alert>
+                      )}
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4} color={'gray.600'}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
+                  {localStorage.getItem('token') ? (
+                    <HStack>
+                      <Input
+                        name="review"
+                        value={review}
+                        onChange={e => setReview(e.target.value)}
+                        rounded={'none'}
+                        placeholder="Write review here"
+                        minLength={'10'}
+                      />
+                      <Spacer />
+
+                      <Button
+                        isDisabled={review.length === 0}
+                        onClick={submitReview}
+                        bg={'green'}
+                      >
+                        <ArrowRightIcon color={'white'} />
+                      </Button>
+                    </HStack>
+                  ) : (
+                    <HStack justifyContent={'center'}>
+                      <Button
+                        border={'none'}
+                        bg={'white'}
+                        color={'red.400'}
+                        onClick={() => window.location.replace('/signin')}
+                      >
+                        {' '}
+                        Please Login to review
+                      </Button>
+                    </HStack>
+                  )}
+
+                  {reviews &&
+                    reviews
+                      .slice()
+                      .reverse()
+                      .map((review, index) => {
+                        return (
+                          <HStack key={index} p={'10px'}>
+                            <Box>
+                              <Text fontWeight={500}>{review.userName}</Text>
+                              <Text>{review.review}</Text>
+                            </Box>
+                            <Spacer />
+                            <Box>
+                              <Text>{review.time}</Text>
+                            </Box>
+                          </HStack>
+                        );
+                      })}
                 </AccordionPanel>
               </AccordionItem>
               <AccordionItem>

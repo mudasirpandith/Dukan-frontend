@@ -5,44 +5,36 @@ const initialState = {
     credential: [],
     error: "",
     message: "",
-    success: false
+    success: false,
+    contentLoader: true
 
 };
-
-const fetch2 = async (api, method, body) => {
-    const res = await fetch(api, {
+// https://dukandar-api.onrender.com/appuser
+const fetchGen = async (api, method, body) => {
+    const res = await fetch("https://dukandar-api.onrender.com/appuser" + api, {
         method: method,
-
         headers: {
             'Accept': 'application/json',
             "Content-Type": "application/json",
-
+            authorization: localStorage.getItem("token")
         },
         body: JSON.stringify(body),
     });
     return await res.json();
 };
 export const signupUser = createAsyncThunk("signupuser", async (body) => {
-    const result = await fetch2("https://dukandar-api.onrender.com/appuser/user-signup", "post", body);
+    const result = await fetchGen("/user-signup", "post", body);
     return result;
 });
 
 export const signinUser = createAsyncThunk("signinuser", async (body) => {
-    const result = await fetch2("https://dukandar-api.onrender.com/appuser/user-signin", "post", body);
+    const result = await fetchGen("/user-signin", "post", body);
     return result;
 });
 
-export const getUser = createAsyncThunk("getUser", async (token) => {
-    const result = await fetch("https://dukandar-api.onrender.com/appuser/user-info", {
-        method: "get",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            authorization: localStorage.getItem("token"),
-        },
-    });
-
-    return await result.json();
+export const getUser = createAsyncThunk("getUser", async (body) => {
+    const result = await fetchGen("/user-info", "get", body)
+    return result;
 });
 
 export const updateuser = createAsyncThunk("updateuser", async (payload) => {
@@ -95,8 +87,8 @@ const authReducer = createSlice({
             state.loading = true;
         },
         [getUser.fulfilled]: (state, { payload: { error, user } }) => {
-
             state.loading = false;
+            state.contentLoader = false
             if (!error) {
                 state.credential = user
             }

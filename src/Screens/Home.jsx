@@ -1,4 +1,3 @@
-import { CheckCircleIcon, StarIcon } from '@chakra-ui/icons';
 import {
   Box,
   Text,
@@ -9,6 +8,7 @@ import {
   Center,
   Stack,
   Flex,
+  Spinner,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -16,6 +16,7 @@ import { HomeFeatureCat } from '../Sections/Home/[Home.FeatureCa]';
 import { HomeSpecialDeal } from '../Sections/Home/[Home.SpecialDeal]';
 import { useEffect } from 'react';
 import { getAllProducts } from '../Reducers/prodReducer';
+import { FaCartPlus, FaHeart, FaLock, FaQuestion } from 'react-icons/fa';
 
 export function Home() {
   const { Allproducts } = useSelector(state => state.products);
@@ -55,8 +56,7 @@ export function Home() {
                 lineHeight={1.2}
                 fontSize={useBreakpointValue({ base: '3xl', md: '4xl' })}
               >
-                Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
-                eiusmod tempor
+                Clothes Shoes Jeans Jackets T-shirst
               </Text>
             </Stack>
           </VStack>
@@ -70,7 +70,7 @@ export function Home() {
               base: 'none',
             })}
           >
-            <CheckCircleIcon fontSize={'2rem'} />
+            <FaLock fontSize={'2rem'} />
             <Text m={0} fontSize={'20px'} color={'gray.500'}>
               Secure Shopping
             </Text>
@@ -86,7 +86,7 @@ export function Home() {
               base: 'none',
             })}
           >
-            <StarIcon fontSize={'2rem'} />
+            <FaHeart fontSize={'2rem'} />
             <Text fontSize={'20px'} color={'gray.500'}>
               Your Favourites
             </Text>
@@ -102,7 +102,7 @@ export function Home() {
               base: 'none',
             })}
           >
-            <StarIcon fontSize={'2rem'} />
+            <FaCartPlus fontSize={'2rem'} />
             <Text fontSize={'20px'} color={'gray.500'}>
               Shop Now!
             </Text>
@@ -111,7 +111,7 @@ export function Home() {
             </Text>
           </VStack>
           <VStack p={'10px'} textAlign={'center'}>
-            <StarIcon fontSize={'2rem'} />
+            <FaQuestion fontSize={'2rem'} />
             <Text fontSize={'20px'} color={'gray.500'}>
               Need help?
             </Text>
@@ -137,7 +137,19 @@ export function Home() {
             </Text>
           </Button>
         </Center>
-        <HomeSpecialDeal products={Allproducts} />
+        {Allproducts ? (
+          <HomeSpecialDeal products={Allproducts} />
+        ) : (
+          <Center>
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="black"
+              size="xl"
+            />
+          </Center>
+        )}
         <HomeFeatureCat />
       </Box>
     </>

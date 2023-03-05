@@ -11,13 +11,15 @@ import {
 } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link,  useNavigate } from 'react-router-dom';
 import { signupUser } from '../Reducers/authReducer';
 export const SignUp = () => {
   const [passMatch, setPassMatch] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error, success } = useSelector(state => state.user);
+  const { loading, error, success } = useSelector(
+    state => state.user
+  );
   const [form, setForm] = useState({
     username: '',
     email: '',
