@@ -11,7 +11,7 @@ const initialState = {
 };
 // https://dukandar-api.onrender.com/appuser
 const fetchGen = async (api, method, body) => {
-    const res = await fetch("https://dukandar-api.onrender.com/appuser" + api, {
+    const res = await fetch("https://dukandar.api.mudasirpandith.live/appuser" + api, {
         method: method,
         headers: {
             'Accept': 'application/json',

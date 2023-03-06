@@ -19,7 +19,7 @@ import { getAllProducts } from '../Reducers/prodReducer';
 import { FaCartPlus, FaHeart, FaLock, FaQuestion } from 'react-icons/fa';
 
 export function Home() {
-  const { Allproducts } = useSelector(state => state.products);
+  const { Allproducts, contentLoader } = useSelector(state => state.products);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllProducts());
@@ -137,7 +137,7 @@ export function Home() {
             </Text>
           </Button>
         </Center>
-        {Allproducts ? (
+        {!contentLoader ? (
           <HomeSpecialDeal products={Allproducts} />
         ) : (
           <Center>

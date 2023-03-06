@@ -19,7 +19,7 @@ const initialState = {
 
 const fetch2 = async (api, method, body) => {
 
-    const res = await fetch("https://dukandar-api.onrender.com/product" + api, {
+    const res = await fetch("https://dukandar.api.mudasirpandith.live/product" + api, {
         method: method,
         headers: {
             'Accept': 'application/json',
