@@ -138,7 +138,7 @@ export function Home() {
           </Button>
         </Center>
         {!contentLoader ? (
-          <HomeSpecialDeal products={Allproducts} />
+          <HomeSpecialDeal home={true} products={Allproducts} />
         ) : (
           <Center>
             <Spinner

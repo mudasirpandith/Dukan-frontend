@@ -22,7 +22,10 @@ export const HomeFeatureCat = () => {
       </Text>
       <SimpleGrid columns={{ md: 5, base: 2 }} spacing={'10px'}>
         <VStack p={'10px'}>
-          <Image src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-math-90946.jpg&fm=jpg" />
+          <Image
+            loading="lazy"
+            src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8dHJvdXNlcnN8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60"
+          />
           <Text
             fontSize={'14px'}
             color={'blackAlpha.600'}
@@ -36,11 +39,14 @@ export const HomeFeatureCat = () => {
             color={'blackAlpha.600'}
             fontWeight={'medium'}
           >
-            Lorem ipsum dolor
+            Under $10
           </Text>
         </VStack>{' '}
         <VStack p={'10px'}>
-          <Image src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-math-90946.jpg&fm=jpg" />
+          <Image
+            loading="lazy"
+            src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8c2hpcnRzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
+          />
           <Text
             fontSize={'14px'}
             color={'blackAlpha.600'}
@@ -54,11 +60,14 @@ export const HomeFeatureCat = () => {
             color={'blackAlpha.600'}
             fontWeight={'medium'}
           >
-            Lorem ipsum dolor
+            Under $11
           </Text>
         </VStack>{' '}
         <VStack p={'10px'}>
-          <Image src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-math-90946.jpg&fm=jpg" />
+          <Image
+            loading="lazy"
+            src="https://images.unsplash.com/photo-1624378441864-6eda7eac51cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGplYW5zJTIwbWVufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
+          />
           <Text
             fontSize={'14px'}
             color={'blackAlpha.600'}
@@ -72,11 +81,14 @@ export const HomeFeatureCat = () => {
             color={'blackAlpha.600'}
             fontWeight={'medium'}
           >
-            Lorem ipsum dolor
+            Under $9
           </Text>
         </VStack>{' '}
         <VStack p={'10px'}>
-          <Image src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-math-90946.jpg&fm=jpg" />
+          <Image
+            loading="lazy"
+            src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2hvZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60"
+          />
           <Text
             fontSize={'14px'}
             color={'blackAlpha.600'}
@@ -90,14 +102,17 @@ export const HomeFeatureCat = () => {
             color={'blackAlpha.600'}
             fontWeight={'medium'}
           >
-            Lorem ipsum dolor
+            Under $12
           </Text>
         </VStack>{' '}
         <VStack
           p={'10px'}
           display={useBreakpointValue({ base: 'none', md: 'flex' })}
         >
-          <Image src="https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-math-90946.jpg&fm=jpg" />
+          <Image
+            loading="lazy"
+            src="https://images.unsplash.com/photo-1627225793904-a2f900a6e4cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjJ8fHQlMjBzaGlydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=600&q=60"
+          />
           <Text
             fontSize={'14px'}
             color={'blackAlpha.600'}
@@ -111,7 +126,7 @@ export const HomeFeatureCat = () => {
             color={'blackAlpha.600'}
             fontWeight={'medium'}
           >
-            Lorem ipsum dolor
+            Under $10
           </Text>
         </VStack>
       </SimpleGrid>

@@ -8,18 +8,20 @@ import {
   useBreakpointValue,
   Button,
   HStack,
+  InputGroup,
+  InputRightElement,
 } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link,  useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { signupUser } from '../Reducers/authReducer';
 export const SignUp = () => {
   const [passMatch, setPassMatch] = useState(0);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error, success } = useSelector(
-    state => state.user
-  );
+  const { loading, error, success } = useSelector(state => state.user);
   const [form, setForm] = useState({
     username: '',
     email: '',
@@ -27,9 +29,49 @@ export const SignUp = () => {
     password: '',
     confirmPassword: '',
   });
-  function handleChange(e) {
+
+  const [formErrors, setFormErrors] = useState({});
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
+  const regexPatterns = {
+    username: /.{2,}/,
+    email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    phoneNumber: /^\d{10}$/,
+    password:
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+    confirmPassword:
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+  };
+  const errorList = {
+    username: '* Cannot be empty',
+    email: '* Invalid Format',
+    phoneNumber: '* Must be a 10-digit number',
+    password:
+      '* Must be at least 6 characters long and contain at one uppercase, one lowercase,one speacial char and one number',
+    confirmPassword: '',
+  };
+
+  const validateField = (fieldName, value) => {
+    let error = '';
+    if (fieldName === 'confirmPassword' && value !== form.password) {
+      error = 'Passwords do not match';
+    } else if (!regexPatterns[fieldName].test(value)) {
+      error = `${errorList[fieldName]}`;
+    }
+    return error;
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    for (const field in form) {
+      errors[field] = validateField(field, form[field]);
+    }
+    setFormErrors(errors);
+    return !Object.values(errors).some(error => error !== '');
+  };
+
+  const handleChange = e => {
     const { name, value } = e.target;
-    console.log(form);
     if (name === 'confirmPassword') {
       if (form.password === value) {
         setPassMatch(0);
@@ -37,19 +79,20 @@ export const SignUp = () => {
         setPassMatch(1);
       }
     }
-    return setForm(prev => {
-      return { ...prev, [name]: value };
-    });
-  }
-  function handleSubmit(e) {
+    setForm(prev => ({ ...prev, [name]: value }));
+    setFormErrors(prev => ({ ...prev, [name]: validateField(name, value) }));
+  };
+
+  const handleSubmit = e => {
     e.preventDefault();
-    dispatch(signupUser(form));
-  }
+
+    if (validateForm()) {
+      dispatch(signupUser(form));
+    }
+  };
 
   useEffect(() => {
-    {
-      localStorage.getItem('token') && navigate('/');
-    }
+    localStorage.getItem('token') && navigate('/');
   });
   const previousPageUrl = document.referrer;
   return (
@@ -65,6 +108,9 @@ export const SignUp = () => {
         <Heading fontSize={'25px'} color={'black)'} py={2}>
           CREATE AN ACCOUNT
         </Heading>
+        <Text fontWeight={'bold'} color={'red'}>
+          {error}
+        </Text>
         <Center
           bg={'white'}
           flexDirection={'column'}
@@ -75,9 +121,6 @@ export const SignUp = () => {
           as="form"
         >
           <>
-            <Text fontWeight={'bold'} color={'red'}>
-              {error}
-            </Text>
             <Input
               isRequired={true}
               value={form.username}
@@ -86,7 +129,12 @@ export const SignUp = () => {
               name="username"
               p={3}
               onChange={handleChange}
-            />
+            />{' '}
+            {formErrors.username && (
+              <Text fontSize={'10px'} color={'red'}>
+                {formErrors.username}
+              </Text>
+            )}
             <Input
               isRequired={true}
               value={form.email}
@@ -95,7 +143,12 @@ export const SignUp = () => {
               p={3}
               name="email"
               onChange={handleChange}
-            />
+            />{' '}
+            {formErrors.email && (
+              <Text fontSize={'10px'} color={'red'}>
+                {formErrors.email}
+              </Text>
+            )}
             <Input
               isRequired={true}
               value={form.phoneNumber}
@@ -104,35 +157,63 @@ export const SignUp = () => {
               p={3}
               name="phoneNumber"
               onChange={handleChange}
-            />
-            <Input
-              isRequired={true}
-              value={form.password}
-              variant="flushed"
-              placeholder="Password"
-              type="text"
-              p={3}
-              name="password"
-              onChange={handleChange}
-            />
+            />{' '}
+            {formErrors.phoneNumber && (
+              <Text fontSize={'10px'} color={'red'}>
+                {formErrors.phoneNumber}
+              </Text>
+            )}
+            <InputGroup size="md">
+              <Input
+                isRequired={true}
+                value={form.password}
+                variant="flushed"
+                placeholder="Password"
+                type={show ? 'text' : 'password'}
+                p={3}
+                name="password"
+                minLength={6}
+                onChange={handleChange}
+              />
+              <InputRightElement width="4.5rem">
+                <Button h="1.75rem" size="sm" onClick={handleClick}>
+                  {show ? <FaEyeSlash /> : <FaEye />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            {formErrors.password && (
+              <Text fontSize={'10px'} color={'red'}>
+                {formErrors.password}
+              </Text>
+            )}
             <Input
               value={form.confirmPassword}
               variant="flushed"
+              isRequired
               placeholder="Confirm Password"
-              type="text"
+              type="passsword"
               name="confirmPassword"
               p={3}
+              minLength={6}
               onChange={handleChange}
             />
-            <Box display={passMatch ? 'flex' : 'none'} color={'red'}>
-              Does not match
+            <Box
+              display={passMatch ? 'flex' : 'none'}
+              fontSize={'10px'}
+              color={'red'}
+            >
+              Passwords do not match
             </Box>
-
             <Button
               onClick={handleSubmit}
               type="submit"
               isLoading={loading}
-              isDisabled={!(form.password === form.confirmPassword)}
+              isDisabled={
+                !(form.password === form.confirmPassword) &&
+                form.password.length < 6 &&
+                form.username.length < 0 &&
+                form.email.length < 0
+              }
               loadingText="please wait..."
               bg={'black'}
               color={'white'}

@@ -14,7 +14,7 @@ const initialState = {
     reviewStatus: ""
 
 };
-// https://dukandar-api.onrender.com/product
+//https://dukandar.api.mudasirpandith.live/product
 
 
 const fetch2 = async (api, method, body) => {

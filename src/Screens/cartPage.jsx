@@ -47,6 +47,10 @@ export const CartPage = () => {
   var amount = 0;
   const { productsInCart, loading, success, contentLoader, message } =
     useSelector(state => state.products);
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(addOrder({ address: addressForm }));
+  };
   useEffect(() => {
     !localStorage.getItem('token') && window.location.replace('/signin');
     dispatch(getProductsInCart());
@@ -108,8 +112,14 @@ export const CartPage = () => {
                     })}
               </Flex>
               <Flex flex={4} flexDirection={'column'}>
-                <Box mx={'auto'} p={'10px'} border={'1px solid gray'}>
-                  <Accordion defaultIndex={[0]} allowMultiple>
+                <Box
+                  as={'form'}
+                  mx={'auto'}
+                  onSubmit={handleSubmit}
+                  p={'10px'}
+                  border={'1px solid gray'}
+                >
+                  <Accordion defaultIndex={[1]} allowMultiple>
                     <AccordionItem>
                       <h2>
                         <AccordionButton>
@@ -298,9 +308,7 @@ export const CartPage = () => {
                     color={'white'}
                     isLoading={loading}
                     w={'full'}
-                    onClick={() => {
-                      dispatch(addOrder({ address: addressForm }));
-                    }}
+                    type="submit"
                   >
                     Checkout
                   </Button>

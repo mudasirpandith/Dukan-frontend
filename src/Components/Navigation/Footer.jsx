@@ -7,7 +7,6 @@ import {
   HStack,
   Input,
   InputGroup,
-  InputLeftElement,
   InputRightElement,
   SimpleGrid,
   Stack,
@@ -31,10 +30,15 @@ export const Footer = () => {
               <Divider flex={3} />
             </HStack>
             <Text py={'5px'} color={'gray.500'} fontSize={'14px'}>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam
-              eveniet enim quae quos. Voluptate adipisci non deserunt debitis
-              tenetur quasi animi ex totam nesciunt, cupiditate eveniet quas
-              saepe, obcaecati aperiam!{' '}
+              Dukandar is a fantastic e-commerce website that offers a wide
+              range of products to its customers. The website is user-friendly,
+              making it easy to navigate and find what you're looking for. The
+              product descriptions are detailed and accurate, and the prices are
+              very competitive. The checkout process is simple and hassle-free,
+              and the website offers a variety of payment options to choose
+              from. The customer service is excellent, with prompt responses to
+              inquiries and fast shipping times. Overall, Dukandar is a great
+              place to shop online for all your needs!
             </Text>
             <Button
               color={'gray.500'}
@@ -55,10 +59,10 @@ export const Footer = () => {
                 A great shopping experice!
               </Text>
               <Text color={'blackAlpha.500'} px={'30px'}>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta
-                excepturi odit, dolorum repudiandae consequuntur quam
-                necessitatibus ullam dolore eligendi placeat facere, inventore
-                sed voluptatem ipsa maxime animi molestias iure repellat.{' '}
+                I love this shopping website! It's user-friendly, the products
+                are accurately described and pictured, the checkout process is
+                hassle-free, and the customer service is top-notch. Highly
+                recommend!
               </Text>
               <Center>⭐⭐⭐⭐⭐</Center>
               <Divider w={'150px'} mx={'auto'} />
@@ -79,13 +83,19 @@ export const Footer = () => {
               <Text fontWeight={500} color={'gray.500'}>
                 NewsLetter
               </Text>
-              <Text py={'10px'}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Delectus, excepturi animi nulla, vero debitis sit enim neque,
+              <Text fontSize={'14px'} py={'10px'} color={'gray.500'}>
+                Subscribing to our newsletter is a great way to stay up-to-date
+                with the latest news, offers, and updates from us. By joining
+                our newsletter, you'll be the first to know about our new
+                products, exclusive promotions, and interesting articles.
+                Signing up is easy and only takes a few moments. Simply provide
+                us with your email address, and we'll take care of the rest.
+                Don't miss out on the latest happenings, subscribe to our
+                newsletter today!
               </Text>
               <Stack spacing={4}>
                 <InputGroup>
-                  <Input rounded={'none'} placeholder="Enter Emial" />
+                  <Input rounded={'none'} placeholder="Enter Email" />
                   <InputRightElement
                     children={<EmailIcon color="blackAlpha.500" />}
                   />
@@ -248,7 +258,8 @@ export const Footer = () => {
               color={'blackAlpha.500'}
               py={'2px'}
             >
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Stay updated and never miss a thing - follow me for the latest
+              news and updates!
             </Text>
           </Box>
         </SimpleGrid>

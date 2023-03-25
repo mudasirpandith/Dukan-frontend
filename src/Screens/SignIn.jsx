@@ -8,31 +8,63 @@ import {
   useBreakpointValue,
   Button,
   HStack,
+  InputGroup,
+  InputRightElement,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { signinUser } from '../Reducers/authReducer';
 export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error, success } = useSelector(
-    state => state.user
-  );
+  const { loading, error, success } = useSelector(state => state.user);
   const [form, setForm] = useState({
     email: '',
     password: '',
   });
+
+  const [formErrors, setFormErrors] = useState({});
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
+  const regexPatterns = {
+    email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    password:
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+  };
+  const errorList = {
+    email: 'Invalid Format',
+    password:
+      ' must be at least 6 characters long and contain at one uppercase, one lowercase,one speacial char and one number',
+  };
+
+  const validateField = (fieldName, value) => {
+    let error = '';
+    if (!regexPatterns[fieldName].test(value)) {
+      error = `${errorList[fieldName]}`;
+    }
+    return error;
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    for (const field in form) {
+      errors[field] = validateField(field, form[field]);
+    }
+    setFormErrors(errors);
+    return !Object.values(errors).some(error => error !== '');
+  };
+
   function handleChange(e) {
     const { name, value } = e.target;
-    return setForm(prev => {
-      return { ...prev, [name]: value };
-    });
+    setForm(prev => ({ ...prev, [name]: value }));
+    setFormErrors(prev => ({ ...prev, [name]: validateField(name, value) }));
   }
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(form);
-    dispatch(signinUser(form));
+
+    if (validateForm()) dispatch(signinUser(form));
   }
   useEffect(() => {
     {
@@ -76,16 +108,33 @@ export const Login = () => {
             p={3}
             onChange={handleChange}
           />
+          {formErrors.email && (
+            <Text fontSize={'10px'} color={'red'}>
+              {formErrors.email}
+            </Text>
+          )}
 
-          <Input
-            value={form.password}
-            name="password"
-            variant="flushed"
-            placeholder="Password"
-            type="password"
-            p={3}
-            onChange={handleChange}
-          />
+          <InputGroup size="md">
+            <Input
+              value={form.password}
+              name="password"
+              variant="flushed"
+              placeholder="Password"
+              type={show ? 'text' : 'password'}
+              p={3}
+              onChange={handleChange}
+            />{' '}
+            <InputRightElement width="4.5rem">
+              <Button h="1.75rem" size="sm" onClick={handleClick}>
+                {show ? <FaEyeSlash /> : <FaEye />}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+          {formErrors.password && (
+            <Text fontSize={'10px'} color={'red'}>
+              {formErrors.password}
+            </Text>
+          )}
           <Text fontWeight={500} color={'blue.800'}>
             Forget Password?
           </Text>
@@ -99,7 +148,6 @@ export const Login = () => {
           >
             Sign In
           </Button>
-
           <Text>OR</Text>
           <HStack display={'flex'} spacing={10}>
             <Image

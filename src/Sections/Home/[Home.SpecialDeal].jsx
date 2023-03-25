@@ -8,13 +8,10 @@ import {
   Button,
   HStack,
 } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addProductToCart } from '../../Reducers/prodReducer';
 
 export const HomeSpecialDeal = props => {
-  const dispatch = useDispatch();
-  const { productInCartSuccess } = useSelector(state => state.products);
-  const [days, setDays] = useState(350);
+  const products = props.home ? props.products.slice(0, 4) : props.products;
+  const [days, setDays] = useState(50);
   const [hours, setHours] = useState(1);
   const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(6);
@@ -37,18 +34,24 @@ export const HomeSpecialDeal = props => {
 
   return (
     <Box
-      border={'solid 2px red'}
+      border={props.home && 'solid 2px red'}
       maxW={'96%'}
       m={'auto'}
       my={'20px'}
       borderRadius={'4px'}
     >
-      <Text textAlign={'center'} py={'10px'} color={'red.300'} fontWeight={500}>
+      <Text
+        display={props.home ? 'flex' : 'none'}
+        textAlign={'center'}
+        py={'10px'}
+        color={'red.300'}
+        fontWeight={500}
+      >
         {' '}
         SPECIAL DEALS{' '}
       </Text>
       <SimpleGrid columns={{ md: 4, base: 1 }} py={'20px'} spacing={'20px'}>
-        {props.products.map((product, index) => {
+        {products.map((product, index) => {
           const url =
             '/product?productId=' + product._id + '&name=' + product.name;
           return (
@@ -64,7 +67,9 @@ export const HomeSpecialDeal = props => {
                   </Text>
                   <Text fontWeight={500} color={'gray.500'}>
                     ${product.price}{' '}
-                    <span style={{ color: 'red' }}>${product.price + 10}</span>
+                    <span style={{ color: 'red' }}>
+                      ${Math.floor(product.price + 10.0)}
+                    </span>
                   </Text>
                 </a>
                 {product.in_stock > 0 ? (
@@ -75,20 +80,10 @@ export const HomeSpecialDeal = props => {
                     rounded={'none'}
                     loadingText="Adding to cart"
                     onClick={() => {
-                      dispatch(
-                        addProductToCart({
-                          productId: product._id,
-                          productSize: 'M',
-                          productsInCart: 1,
-                        })
-                      );
-                      {
-                        productInCartSuccess &&
-                          window.location.replace('/cart');
-                      }
+                      window.location.replace(url);
                     }}
                   >
-                    Add to cart
+                    View Product
                   </Button>
                 ) : (
                   <Button
@@ -106,6 +101,7 @@ export const HomeSpecialDeal = props => {
                 <HStack
                   w={'full'}
                   textAlign={'center'}
+                  display={props.home ? 'flex' : 'none'}
                   h={'40px'}
                   bg={'blackAlpha.200'}
                   fontSize={'22px'}
@@ -121,6 +117,7 @@ export const HomeSpecialDeal = props => {
                   <Text>{seconds} </Text>
                 </HStack>
                 <HStack
+                  display={props.home ? 'flex' : 'none'}
                   w={'full'}
                   textAlign={'center'}
                   bg={'white'}

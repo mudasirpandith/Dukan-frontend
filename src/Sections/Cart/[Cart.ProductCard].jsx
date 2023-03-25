@@ -22,14 +22,16 @@ export const CartProductCard = props => {
         <Flex flexDirection={isSmallerThan800 ? 'column' : 'row'}>
           <Text fontSize={'20px'}>{props.productName}</Text>
           <Spacer />
-          <Text fontSize={'20px'}>${props.productPrice}</Text>
+          <Text color={'green'} fontWeight={'bold'} fontSize={'20px'}>
+            ${props.productPrice}
+          </Text>
         </Flex>
         <Box>
           <Text fontSize={'14px'} color={'blackAlpha.700'} fontWeight={500}>
             Size Selected: {props.productSize}
           </Text>
           <Text fontSize={'14px'} color={'blackAlpha.700'} fontWeight={500}>
-            Quantity:{props.productsInCart} pieces
+            Quantity:{props.productsInCart} piece/s
           </Text>
           <Text fontSize={'14px'} color={'blackAlpha.700'} fontWeight={500}>
             Unit Price: ${props.productPrice}
