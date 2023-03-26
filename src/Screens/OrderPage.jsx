@@ -1,4 +1,4 @@
-import { Box, Center, Heading, Spinner,  VStack } from '@chakra-ui/react';
+import { Box, Center, Image, Spinner } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrders } from '../Reducers/prodReducer';
@@ -13,10 +13,10 @@ export const OrderPage = () => {
   }, [dispatch]);
   return !contentLoader ? (
     <>
-      {orders.length == 0 ? (
-        <VStack pt={40} pb={40}>
-          <Heading>No Order Yet!</Heading>
-        </VStack>
+      {orders.length === 0 ? (
+        <Center>
+          <Image src="https://grocerycart.wawbizstores.com/assets/images/no_order1.png" />
+        </Center>
       ) : (
         <Box>
           {orders

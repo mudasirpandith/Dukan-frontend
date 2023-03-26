@@ -4,11 +4,11 @@ import {
   useBreakpointValue,
   SimpleGrid,
   VStack,
-  Button,
   Center,
   Stack,
   Flex,
   Spinner,
+  Image,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -49,7 +49,7 @@ export function Home() {
             bgGradient={'linear(to-r, blackAlpha.600, transparent)'}
           >
             <Stack maxW={'2xl'} align={'flex-start'} spacing={6}>
-              <Text
+              {/* <Text
                 color={'white'}
                 fontWeight={700}
                 textAlign={'center'}
@@ -57,7 +57,7 @@ export function Home() {
                 fontSize={useBreakpointValue({ base: '3xl', md: '4xl' })}
               >
                 Clothes Shoes Jeans Jackets T-shirst
-              </Text>
+              </Text> */}
             </Stack>
           </VStack>
         </Flex>
@@ -70,11 +70,11 @@ export function Home() {
               base: 'none',
             })}
           >
-            <FaLock fontSize={'2rem'} />
-            <Text m={0} fontSize={'20px'} color={'gray.500'}>
+            <FaLock color="green" fontSize={'2rem'} />
+            <Text m={0} fontSize={'20px'} color="green">
               Secure Shopping
             </Text>
-            <Text fontSize={'18px'} color={'gray.600'}>
+            <Text fontSize={'18px'} color="green">
               Secure Payments
             </Text>
           </VStack>
@@ -86,11 +86,11 @@ export function Home() {
               base: 'none',
             })}
           >
-            <FaHeart fontSize={'2rem'} />
-            <Text fontSize={'20px'} color={'gray.500'}>
+            <FaHeart color="red" fontSize={'2rem'} />
+            <Text py={0} fontSize={'20px'} color="red">
               Your Favourites
             </Text>
-            <Text fontSize={'18px'} color={'gray.600'}>
+            <Text py={0} fontSize={'18px'} color="red">
               Buy your wish list
             </Text>
           </VStack>
@@ -102,41 +102,40 @@ export function Home() {
               base: 'none',
             })}
           >
-            <FaCartPlus fontSize={'2rem'} />
-            <Text fontSize={'20px'} color={'gray.500'}>
+            <FaCartPlus color="green" fontSize={'2rem'} />
+            <Text fontSize={'20px'} color="green">
               Shop Now!
             </Text>
-            <Text fontSize={'18px'} color={'gray.600'}>
+            <Text fontSize={'18px'} color="green">
               Great Discounts!
             </Text>
           </VStack>
           <VStack p={'10px'} textAlign={'center'}>
-            <FaQuestion fontSize={'2rem'} />
-            <Text fontSize={'20px'} color={'gray.500'}>
+            <FaQuestion color="red" fontSize={'2rem'} />
+            <Text fontSize={'20px'} color="red">
               Need help?
             </Text>
-            <Text fontSize={'18px'} color={'gray.600'}>
+            <Text fontSize={'18px'} color="red">
               FAQ
             </Text>
           </VStack>
         </SimpleGrid>
-        <Center>
-          <Button
-            alignSelf={'center'}
-            justifyContent={'center'}
-            w={'96%'}
-            bg={'red.300'}
-            my={'10px'}
-          >
-            <Text
-              fontWeight={500}
-              color={'white'}
-              fontSize={useBreakpointValue({ md: '15px', base: '10px' })}
-            >
-              FREE DELIVERY ON ALL ORDERS ABOVE $50 | FREE 20 DAYS RETURN
-            </Text>
-          </Button>
-        </Center>
+        <Image
+          m={'auto'}
+          h={'250px'}
+          src="https://t4.ftcdn.net/jpg/00/66/60/19/360_F_66601929_IwJz3CXN896Yo6qLT69D73Tc5ZfiBjfK.jpg"
+        />
+
+        <Text
+          bg={'green'}
+          color={'white'}
+          py={'10px'}
+          textAlign={'center'}
+          fontWeight={500}
+          borderRadius={'10px'}
+        >
+          FREE DELIVERY ON ALL ORDERS ABOVE $50
+        </Text>
         {!contentLoader ? (
           <HomeSpecialDeal home={true} products={Allproducts} />
         ) : (

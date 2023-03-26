@@ -41,7 +41,7 @@ export const HomeSpecialDeal = props => {
       borderRadius={'4px'}
     >
       <Text
-        display={props.home ? 'flex' : 'none'}
+        display={!props.home && 'none'}
         textAlign={'center'}
         py={'10px'}
         color={'red.300'}
@@ -50,7 +50,11 @@ export const HomeSpecialDeal = props => {
         {' '}
         SPECIAL DEALS{' '}
       </Text>
-      <SimpleGrid columns={{ md: 4, base: 1 }} py={'20px'} spacing={'20px'}>
+      <SimpleGrid
+        columns={{ md: 4, base: props.home ? 1 : 2 }}
+        py={'20px'}
+        spacing={'20px'}
+      >
         {products.map((product, index) => {
           const url =
             '/product?productId=' + product._id + '&name=' + product.name;
@@ -75,10 +79,10 @@ export const HomeSpecialDeal = props => {
                 {product.in_stock > 0 ? (
                   <Button
                     w={'full'}
-                    border={'1px solid black'}
+                    border={'1px solid gray'}
                     bg={'white'}
+                    display={!props.home && 'none'}
                     rounded={'none'}
-                    loadingText="Adding to cart"
                     onClick={() => {
                       window.location.replace(url);
                     }}
@@ -87,6 +91,7 @@ export const HomeSpecialDeal = props => {
                   </Button>
                 ) : (
                   <Button
+                    display={!props.home && 'none'}
                     w={'full'}
                     border={'1px solid red'}
                     bg={'white'}

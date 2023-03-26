@@ -1,5 +1,5 @@
 import React from 'react';
-import { Center, Spinner } from '@chakra-ui/react';
+import { Center, Container, Spinner } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { HomeSpecialDeal } from '../Sections/Home/[Home.SpecialDeal]';
 import { useEffect } from 'react';
@@ -12,7 +12,9 @@ export const Products = () => {
     dispatch(getAllProducts());
   }, []);
   return !contentLoader ? (
-    <HomeSpecialDeal home={false} products={Allproducts} />
+    <Container maxW={'6xl'}>
+      <HomeSpecialDeal home={false} products={Allproducts} />
+    </Container>
   ) : (
     <Center>
       <Spinner

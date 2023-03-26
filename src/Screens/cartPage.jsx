@@ -11,13 +11,12 @@ import {
   Center,
   Divider,
   Flex,
-  Heading,
   HStack,
+  Image,
   Input,
   Spacer,
   Spinner,
   Text,
-  VStack,
 } from '@chakra-ui/react';
 import { useMediaQuery } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
@@ -49,7 +48,7 @@ export const CartPage = () => {
     useSelector(state => state.products);
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(addOrder({ address: addressForm }));
+    dispatch(addOrder({ address: addressForm, timeOrder: String(new Date()) }));
   };
   useEffect(() => {
     !localStorage.getItem('token') && window.location.replace('/signin');
@@ -59,11 +58,9 @@ export const CartPage = () => {
   return !contentLoader ? (
     <>
       {' '}
-      {productsInCart.length === 0 ? (
+      {productsInCart && productsInCart.length === 0 ? (
         <Center>
-          <VStack pt={40} pb={40}>
-            <Heading>Nothing in Cart</Heading>
-          </VStack>
+          <Image src="https://shop.millenniumbooksource.com/static/images/cart1.png" />
         </Center>
       ) : (
         <>

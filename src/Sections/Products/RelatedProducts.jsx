@@ -1,13 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  HStack,
-  Text,
-  Image,
-  SimpleGrid,
-  Button,
-  Spacer,
-} from '@chakra-ui/react';
+import { Box, HStack, Text, Image, SimpleGrid, Spacer } from '@chakra-ui/react';
 import React from 'react';
 
 export const RelatedProducts = () => {
@@ -128,15 +120,17 @@ export const RelatedProducts = () => {
           </HStack>
         </Box>
       </SimpleGrid>
-      <Button w={'full'} bg={'red.300'} my={'10px'}>
-        <Text
-          fontWeight={500}
-          color={'white'}
-          //fontSize={useBreakpointValue({ md: '15px', base: '10px' })}
-        >
-          FREE DELIVERY ON ALL ORDERS ABOVE $50
-        </Text>
-      </Button>
+
+      <Text
+        bg={'green'}
+        color={'white'}
+        py={'10px'}
+        textAlign={'center'}
+        fontWeight={500}
+        borderRadius={'10px'}
+      >
+        FREE DELIVERY ON ALL ORDERS ABOVE $30
+      </Text>
     </Box>
   );
 };

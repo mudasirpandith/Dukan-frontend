@@ -258,7 +258,7 @@ export const Footer = () => {
               color={'blackAlpha.500'}
               py={'2px'}
             >
-              Stay updated and never miss a thing - follow me for the latest
+              Stay updated and never miss a thing - follow us for the latest
               news and updates!
             </Text>
           </Box>

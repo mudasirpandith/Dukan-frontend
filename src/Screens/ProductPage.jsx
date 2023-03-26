@@ -60,11 +60,18 @@ export const ProductPage = () => {
     dispatch(getSingleProduct({ id }));
   }, []);
   function submitReview() {
-    if (review.length != 0) {
-      dispatch(addReview({ review, productId: singleProduct._id }));
+    if (review.length !== 0) {
+      dispatch(
+        addReview({
+          review,
+          productId: singleProduct._id,
+          timeAdd: String(new Date()),
+        })
+      );
       setReview('');
     }
   }
+
   return !contentLoader ? (
     <>
       <Box border={'solid 2px #EEEEEE'} borderTop={'3px solid black'}>
@@ -206,7 +213,7 @@ export const ProductPage = () => {
             <Text color={'green'} py={'5px'}>
               *{singleProduct && singleProduct.return_policy}
             </Text>{' '}
-            {message != '' && (
+            {message !== '' && (
               <Alert status="success">
                 <AlertIcon />
                 <HStack w={'full'}>
@@ -382,7 +389,7 @@ export const ProductPage = () => {
                   <AccordionButton>
                     <Box as="span" fontWeight={600} flex="1" textAlign="left">
                       Reviews ({reviews && reviews.length}){' '}
-                      {reviewStatus != '' && (
+                      {reviewStatus !== '' && (
                         <Alert status="success">
                           <AlertIcon />
                           <HStack w={'full'}>
