@@ -19,13 +19,10 @@ import { Profile } from './Screens/Profile';
 import { CartPage } from './Screens/cartPage';
 import { OrderPage } from './Screens/OrderPage';
 import { Products } from './Screens/Products';
-import Aos from 'aos';
+
 
 function App() {
-  Aos.init({
-    duration: 2000,
-    once: true,
-  });
+
   return (
     <ChakraProvider>
       <div>
